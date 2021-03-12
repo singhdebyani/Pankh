@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" >
+   <head>
+      <meta charset="UTF-8">
+      <title>Save for later</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+      <link rel="stylesheet" href="./style.css">
+<link rel="shortcut icon" href="./images/donation.png" type="image/x-icon">
+<style>
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body{
+    font-family: 'Roboto', sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+i {
+    margin-right: 10px;
+}
+input:focus,
+button:focus,
+.form-control:focus{
+    outline: none;
+    box-shadow: none;
+}
+.form-control:disabled, .form-control[readonly]{
+    background-color: #fff;
+}
+.table tr,
+.table tr td{
+    vertical-align: middle;
+}
+.button-container{
+    display: flex;
+    align-items: center;
+}
+.button-container .form-control{
+    max-width: 80px;
+    text-align: center;
+    display: inline-block;
+    margin: 0px 5px;
+}
+#myTable .form-control{
+    width: auto;
+    display: inline-block;
+}
+.cart-qty-plus,
+.cart-qty-minus{
+    width: 38px;
+    height: 38px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+.cart-qty-plus:hover,
+.cart-qty-minus:hover{
+    background-color: #5161ce;
+    color: #fff;
+}
+.img-prdct{
+    width: 50px;
+    height: 100px;
+    background-color: #5161ce;
+    border-radius: 4px;
+}
+.img-prdct img{
+    width: 100%;
+height:100%;
+}
+thead tr{
+    background-color: #343A40;
+    color: white;
+}
+.img-prdct{
+    width:100px !important;
+    height:100px !important;
+}
+.cart-qty-plus{
+    background-color:#00a5e8;
+    color:white;
+    font-weight: 600;
+}
+.cart-qty-minus{
+    background-color:#00a5e8;
+    color:white;
+    font-weight: 600;
+}
+</style>
+   </head>
+   <body>
+<div class="container-fluid mt-5">
+   <h2 class="mb-5 text-center">Save for later</h2>
+   <div class="row justify-content-center">
+      <div class="col-md-8">
+         <div class="table-responsive">
+            <table id="myTable" class="table">
+               <thead>
+                  <tr>
+                     <th>NGOs/Child</th>
+                     <th>Name</th>
+                     <th>Donation amount</th>
+                     <th class="text-right">
+                        <span id="amount" class="amount">Amount</span>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+   <td>
+      <div class="product-img">
+         <div class="img-prdct">
+            <img src="./images/NGO1.jpg">
+         </div>
+      </div>
+   </td>
+   <td>
+      <p>selection 1</p>
+   </td>
+   
+   <td>
+      <input type="text" class="price form-control">
+   </td>
+   <td align="right">Rs. <span id="amount" class="amount">0</span>
+   </td>
+
+</tr>
+                
+               
+<tr>
+   <td>
+      <div class="product-img">
+         <div class="img-prdct">
+            <img src="./images/NGO3.jpg">
+         </div>
+      </div>
+   </td>
+   <td>
+      <p>Selection 2</p>
+   </td>
+   
+   <td>
+      <input type="text" class="price form-control">
+   </td>
+   <td align="right">Rs. <span id="amount" class="amount">0</span>
+   </td>
+
+</tr>
+<tr>
+   <td>
+      <div class="product-img">
+         <div class="img-prdct">
+            <img src="./images/NGO4.jpg">
+         </div>
+      
+   </td>
+   <td>
+      <p>Selection 3</p>
+   </td>
+   
+   <td>
+      <input type="text" class="price form-control">
+   </td>
+   <td align="right">Rs. <span id="amount" class="amount">0</span>
+   </td>
+</tr>
+<tr>
+   <td>
+      <div class="product-img">
+         <div class="img-prdct">
+            <img src="./images/NGO5.jpg">
+         </div>
+      </div>
+   </td>
+   <td>
+      <p>Selection 4</p>
+   </td>
+   
+   <td>
+      <input type="text" class="price form-control">
+   </td>
+   <td align="right">Rs. <span id="amount" class="amount">0</span>
+   </td>
+
+</tr>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+<script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+<script  src="./script.js"></script>
+<script>
+$(document).ready(function(){
+    update_amounts();
+    $('.price').on('keyup keypress blur change', function(e) {
+        update_amounts();
+    });
+});
+function update_amounts(){
+    var sum = 0.0;
+    $('#myTable > tbody  > tr').each(function() {
+        var price = $(this).find('.price').val();
+
+        var amount = (price)
+        sum+=amount;
+        $(this).find('.amount').text(''+amount);
+    });
+    $('.total').text(sum);
+}
+var incrementQty;
+var decrementQty;
+var plusBtn  = $(".cart-qty-plus");
+var minusBtn = $(".cart-qty-minus");
+var incrementQty = plusBtn.click(function() {
+    var $n = $(this)
+    .parent(".button-container")
+    .find(".price");
+    $n.val(Number($n.val())+1 );
+    update_amounts();
+});
+var decrementQty = minusBtn.click(function() {
+    var $n = $(this)
+    .parent(".button-container")
+    .find(".price");
+    var QtyVal = Number($n.val());
+    if (QtyVal > 0) {
+        $n.val(QtyVal-1);
+    }
+    update_amounts();
+});
+</script>
+</html>
